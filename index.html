@@ -1,9 +1,9 @@
-
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calafate</title>
+    <title>Yamil</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -58,6 +58,10 @@
             background-color: #0f172a;
             color: #f8fafc;
             overflow-x: hidden;
+            user-select: none; /* CSS Select Disable */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         /* Prevent image dragging and selection globally */
@@ -186,7 +190,7 @@
         }
     </style>
 </head>
-<body class="antialiased selection:bg-ice-500 selection:text-white min-h-screen flex flex-col" oncontextmenu="return false;" ondragstart="return false;">
+<body class="antialiased selection:bg-ice-500 selection:text-white min-h-screen flex flex-col" oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
     <!-- WEATHER WIDGET (Fixed Top Right) -->
     <!-- Mantenido top-4 right-4 pero con z-index muy alto para asegurar visibilidad -->
@@ -374,6 +378,23 @@
     </div>
 
     <script>
+        // --- Security Measures (No Right Click, No F12/Ctrl+U) ---
+        document.addEventListener('keydown', function(e) {
+            // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.key === 'u') ||
+                (e.ctrlKey && e.key === 'U') ||
+                (e.ctrlKey && e.key === 's') ||
+                (e.ctrlKey && e.key === 'S')
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
         // --- API Connection Status Logic ---
         async function checkStatus(user, elementId) {
             const el = document.getElementById(elementId);
